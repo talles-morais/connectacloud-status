@@ -26,7 +26,15 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 
         {/* last checked */}
         <div className="self-end">
-          <span className="text-sm font-light">Atualizado em: {new Date(service.lastChecked).toLocaleDateString("pt-br", { hour: "2-digit", minute: "numeric", day: "2-digit", month: "short" })}</span>
+          <span className="text-sm font-light">
+            Atualizado em:{" "}
+            {new Date(service.lastChecked).toLocaleDateString("pt-br", {
+              hour: "2-digit",
+              minute: "numeric",
+              day: "2-digit",
+              month: "short",
+            })}
+          </span>
         </div>
       </div>
     </div>

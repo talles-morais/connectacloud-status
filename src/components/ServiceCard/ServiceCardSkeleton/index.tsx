@@ -21,5 +21,5 @@ export default function ServiceCardSkeleton() {
         <Skeleton className="self-end h-5 w-2/3" />
       </div>
     </div>
-  )
+  );
 }
