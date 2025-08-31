@@ -20,9 +20,8 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           {/* service latency */}
           <div className="flex flex-col gap-2">
             <span>Latency:</span>
-            <span className="font-bold">{service.latency}ms</span>
+            <span className="font-bold">{service.latency} ms</span>
           </div>
-
         </div>
 
         {/* last checked */}
