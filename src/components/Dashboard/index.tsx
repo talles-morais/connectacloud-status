@@ -9,13 +9,13 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div className="container mx-auto pt-10 space-y-10">
-      <div className="flex px-3 py-2 gap-2 border border-zinc-400 rounded-lg mx-4">
-        <Search />
+    <div className="container mx-auto pt-10 space-y-10 px-4">
+      <div className="flex px-4 py-3 gap-3 border border-border rounded-lg bg-card shadow-sm">
+        <Search className="w-5 h-5 text-foreground/60" />
         <input
           type="text"
           placeholder="Pesquise pelo serviço desejado"
-          className="outline-none flex-1"
+          className="outline-none flex-1 bg-transparent text-foreground placeholder:text-foreground/60"
           onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
