@@ -1,3 +1,4 @@
+import React from "react";
 import type { Service } from "../../types/Service";
 import StatusBadge from "../StatusBadge";
 
@@ -5,7 +6,7 @@ interface ServiceCardProps {
   service: Service;
 }
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className="border border-border drop-shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all">
       <div className="flex flex-col gap-2">
@@ -40,3 +41,5 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     </div>
   );
 }
+
+export default React.memo(ServiceCard);

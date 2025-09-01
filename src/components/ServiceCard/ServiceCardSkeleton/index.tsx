@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import React from "react";
 
-export default function ServiceCardSkeleton() {
+function ServiceCardSkeleton() {
   return (
     <div className="border border-border drop-shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all">
       <div className="flex flex-col gap-2 w-full">
@@ -23,3 +24,5 @@ export default function ServiceCardSkeleton() {
     </div>
   );
 }
+
+export default React.memo(ServiceCardSkeleton);
