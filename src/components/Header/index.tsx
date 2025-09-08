@@ -1,32 +1,21 @@
-interface HeaderProps {
-  title?: string;
-  showNavigation?: boolean;
-}
+import { useTheme } from "@/hooks/useTheme";
+import { Moon, Sun } from "lucide-react";
 
-export default function Header({
-  title = "ConnectaCloud Status",
-  showNavigation = true,
-}: HeaderProps) {
-  const handleRefresh = () => {
-    window.location.reload();
-  };
+export default function Header() {
+  const { darkMode, toggleTheme } = useTheme();
 
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-lg">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{title}</h1>
+    <header className="flex justify-between bg-card w-full shadow-lg px-6 py-4 border-b border-border">
+      <h1 className="font-bold text-xl sm:text-2xl text-foreground">
+        ConnectaCloud Status
+      </h1>
 
-        {showNavigation && (
-          <nav className="flex space-x-4">
-            <button
-              onClick={handleRefresh}
-              className="bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded transition-colors"
-            >
-              Atualizar
-            </button>
-          </nav>
-        )}
-      </div>
+      <button
+        onClick={toggleTheme}
+        className="p-2 rounded-lg hover:bg-background transition-colors"
+      >
+        {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
     </header>
   );
 }
