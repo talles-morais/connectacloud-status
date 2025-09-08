@@ -3,10 +3,24 @@ import ServiceCard from "../ServiceCard";
 import useServiceStatus from "../../hooks/useServiceStatus";
 import ServiceCardSkeleton from "../ServiceCard/ServiceCardSkeleton";
 import { useState } from "react";
+import Modal from "../Modal";
+import type { Service } from "../../types/Service";
 
 export default function Dashboard() {
   const { services, isLoading } = useServiceStatus();
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleServiceClick = (service: Service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
+  };
 
   return (
     <div className="container mx-auto pt-10 space-y-10 px-4">
@@ -35,7 +49,11 @@ export default function Dashboard() {
 
               return filteredServices.length > 0 ? (
                 filteredServices.map(service => (
-                  <ServiceCard key={service.id} service={service} />
+                  <ServiceCard
+                    key={service.id}
+                    service={service}
+                    onClick={() => handleServiceClick(service)}
+                  />
                 ))
               ) : (
                 <div className="col-span-full text-center py-8">
@@ -46,6 +64,14 @@ export default function Dashboard() {
               );
             })()}
       </section>
+
+      {isModalOpen && selectedService && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={handleCloseModal}
+          service={selectedService}
+        />
+      )}
     </div>
   );
 }

@@ -4,11 +4,15 @@ import StatusBadge from "../StatusBadge";
 
 interface ServiceCardProps {
   service: Service;
+  onClick?: () => void;
 }
 
-function ServiceCard({ service }: ServiceCardProps) {
+function ServiceCard({ service, onClick }: ServiceCardProps) {
   return (
-    <div className="border border-border shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card">
+    <div
+      className="border border-border shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex flex-col gap-2">
         <h1 className="text-lg font-bold text-foreground">{service.name}</h1>
         <div className="flex justify-between">
