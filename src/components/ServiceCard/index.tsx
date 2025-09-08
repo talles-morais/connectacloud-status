@@ -5,9 +5,18 @@ import StatusBadge from "../StatusBadge";
 interface ServiceCardProps {
   service: Service;
   onClick?: () => void;
+  simulateError?: boolean;
 }
 
-function ServiceCard({ service, onClick }: ServiceCardProps) {
+function ServiceCard({
+  service,
+  onClick,
+  simulateError = false,
+}: ServiceCardProps) {
+  if (simulateError) {
+    throw new Error(`Erro simulado no card do serviço: ${service.name}`);
+  }
+
   return (
     <div
       className="border border-border shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer"

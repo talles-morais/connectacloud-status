@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import ServiceCard from "../ServiceCard";
+import ServiceCardErrorBoundary from "../ServiceCardWithErrorBoundary";
 import useServiceStatus from "../../hooks/useServiceStatus";
 import ServiceCardSkeleton from "../ServiceCard/ServiceCardSkeleton";
 import { useState } from "react";
@@ -49,11 +50,16 @@ export default function Dashboard() {
 
               return filteredServices.length > 0 ? (
                 filteredServices.map(service => (
-                  <ServiceCard
+                  <ServiceCardErrorBoundary
                     key={service.id}
-                    service={service}
-                    onClick={() => handleServiceClick(service)}
-                  />
+                    serviceName={service.name}
+                  >
+                    <ServiceCard
+                      service={service}
+                      onClick={() => handleServiceClick(service)}
+                      simulateError={service.id === "3"}
+                    />
+                  </ServiceCardErrorBoundary>
                 ))
               ) : (
                 <div className="col-span-full text-center py-8">
