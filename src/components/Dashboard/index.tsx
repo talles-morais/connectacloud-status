@@ -1,17 +1,21 @@
 import { Search } from "lucide-react";
 import ServiceCard from "../ServiceCard";
 import ServiceCardErrorBoundary from "../ServiceCardWithErrorBoundary";
-import useServiceStatus from "../../hooks/useServiceStatus";
 import ServiceCardSkeleton from "../ServiceCard/ServiceCardSkeleton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../Modal";
 import type { Service } from "../../types/Service";
+import useServiceStore from "@/stores/serviceStore";
 
 export default function Dashboard() {
-  const { services, isLoading } = useServiceStatus();
+  const { services, isLoading, initializeServices } = useServiceStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    initializeServices();
+  }, [initializeServices]);
 
   const handleServiceClick = (service: Service) => {
     setSelectedService(service);
@@ -44,7 +48,7 @@ export default function Dashboard() {
             ))
           : // Exibe os serviços quando carregados
             (() => {
-              const filteredServices = services.filter(service =>
+              const filteredServices = services.allIds.filter(service =>
                 service.name.toLowerCase().includes(searchTerm.toLowerCase())
               );
 
