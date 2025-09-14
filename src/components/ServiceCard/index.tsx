@@ -1,29 +1,32 @@
 import React from "react";
 import type { Service } from "../../types/Service";
 import StatusBadge from "../StatusBadge";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ServiceCardProps {
   service: Service;
-  onClick?: () => void;
   simulateError?: boolean;
 }
 
-function ServiceCard({
-  service,
-  onClick,
-  simulateError = false,
-}: ServiceCardProps) {
+function ServiceCard({ service, simulateError = false }: ServiceCardProps) {
   if (simulateError) {
     throw new Error(`Erro simulado no card do serviço: ${service.name}`);
   }
 
   return (
-    <div
-      className="border border-border shadow-sm rounded-lg col-span-1 px-5 py-4 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer"
-      onClick={onClick}
-    >
-      <div className="flex flex-col gap-2">
-        <h1 className="text-lg font-bold text-foreground">{service.name}</h1>
+    <Card className="border border-border shadow-sm rounded-lg col-span-1 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer">
+      <CardHeader>
+        <CardTitle className="text-lg font-bold text-foreground">
+          {service.name}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-2">
         <div className="flex justify-between">
           {/* service status */}
           <div className="flex flex-col gap-2">
@@ -39,7 +42,8 @@ function ServiceCard({
             </span>
           </div>
         </div>
-
+      </CardContent>
+      <CardFooter>
         {/* last checked */}
         <div className="self-end">
           <span className="text-sm font-light text-foreground/60">
@@ -52,8 +56,8 @@ function ServiceCard({
             })}
           </span>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
 
