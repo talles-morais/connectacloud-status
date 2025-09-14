@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import type { Service } from "../../types/Service";
 import useServiceStore from "@/stores/serviceStore";
 
+
 export default function Dashboard() {
   const { services, isLoading, initializeServices } = useServiceStore();
   const [searchTerm, setSearchTerm] = useState("");
