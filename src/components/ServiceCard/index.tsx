@@ -11,24 +11,16 @@ import {
 
 interface ServiceCardProps {
   service: Service;
-  onClick?: () => void;
   simulateError?: boolean;
 }
 
-function ServiceCard({
-  service,
-  onClick,
-  simulateError = false,
-}: ServiceCardProps) {
+function ServiceCard({ service, simulateError = false }: ServiceCardProps) {
   if (simulateError) {
     throw new Error(`Erro simulado no card do serviço: ${service.name}`);
   }
 
   return (
-    <Card
-      className="border border-border shadow-sm rounded-lg col-span-1 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer"
-      onClick={onClick}
-    >
+    <Card className="border border-border shadow-sm rounded-lg col-span-1 max-w-[300px] md:max-w-full hover:scale-105 transition-all bg-card cursor-pointer">
       <CardHeader>
         <CardTitle className="text-lg font-bold text-foreground">
           {service.name}

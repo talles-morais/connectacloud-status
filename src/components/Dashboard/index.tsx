@@ -4,30 +4,16 @@ import ServiceCardErrorBoundary from "../ServiceCardWithErrorBoundary";
 import ServiceCardSkeleton from "../ServiceCard/ServiceCardSkeleton";
 import { useState, useEffect } from "react";
 import Modal from "../Modal";
-import type { Service } from "../../types/Service";
 import useServiceStore from "@/stores/serviceStore";
 import { Input } from "../ui/input";
-
 
 export default function Dashboard() {
   const { services, isLoading, initializeServices } = useServiceStore();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     initializeServices();
   }, [initializeServices]);
-
-  const handleServiceClick = (service: Service) => {
-    setSelectedService(service);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedService(null);
-  };
 
   return (
     <div className="container mx-auto pt-10 space-y-10 px-4">
@@ -60,10 +46,16 @@ export default function Dashboard() {
                     key={service.id}
                     serviceName={service.name}
                   >
-                    <ServiceCard
+                    <Modal
+                      trigger={
+                        <div className="cursor-pointer">
+                          <ServiceCard
+                            service={service}
+                            simulateError={service.id === "3"}
+                          />
+                        </div>
+                      }
                       service={service}
-                      onClick={() => handleServiceClick(service)}
-                      simulateError={service.id === "3"}
                     />
                   </ServiceCardErrorBoundary>
                 ))
@@ -76,14 +68,6 @@ export default function Dashboard() {
               );
             })()}
       </section>
-
-      {isModalOpen && selectedService && (
-        <Modal
-          isOpen={isModalOpen}
-          setIsOpen={handleCloseModal}
-          service={selectedService}
-        />
-      )}
     </div>
   );
 }
