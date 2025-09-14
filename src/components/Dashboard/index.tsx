@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Modal from "../Modal";
 import type { Service } from "../../types/Service";
 import useServiceStore from "@/stores/serviceStore";
+import { Input } from "../ui/input";
 
 
 export default function Dashboard() {
@@ -30,12 +31,12 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto pt-10 space-y-10 px-4">
-      <div className="flex px-4 py-3 gap-3 border border-border rounded-lg bg-card shadow-sm">
+      <div className="flex px-4 py-3 gap-3 border border-border rounded-lg bg-card shadow-sm items-center">
         <Search className="w-5 h-5 text-foreground/60" />
-        <input
+        <Input
           type="text"
           placeholder="Pesquise pelo serviço desejado"
-          className="outline-none flex-1 bg-transparent text-foreground placeholder:text-foreground/60"
+          className="border-none"
           onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
