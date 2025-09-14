@@ -1,5 +1,6 @@
 import { useTheme } from "@/hooks/useTheme";
 import { Moon, Sun } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const { darkMode, toggleTheme } = useTheme();
@@ -10,12 +11,13 @@ export default function Header() {
         ConnectaCloud Status
       </h1>
 
-      <button
+      <Button
         onClick={toggleTheme}
         className="p-2 rounded-lg hover:bg-background transition-colors"
+        variant="secondary"
       >
         {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-      </button>
+      </Button>
     </header>
   );
 }
