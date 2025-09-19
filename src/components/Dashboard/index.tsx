@@ -1,36 +1,28 @@
 import { Search } from "lucide-react";
 import ServiceCard from "../ServiceCard";
 import ServiceCardErrorBoundary from "../ServiceCardWithErrorBoundary";
-import useServiceStatus from "../../hooks/useServiceStatus";
 import ServiceCardSkeleton from "../ServiceCard/ServiceCardSkeleton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../Modal";
-import type { Service } from "../../types/Service";
+import useServiceStore from "@/stores/serviceStore";
+import { Input } from "../ui/input";
 
 export default function Dashboard() {
-  const { services, isLoading } = useServiceStatus();
+  const { services, isLoading, initializeServices } = useServiceStore();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleServiceClick = (service: Service) => {
-    setSelectedService(service);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedService(null);
-  };
+  useEffect(() => {
+    initializeServices();
+  }, [initializeServices]);
 
   return (
     <div className="container mx-auto pt-10 space-y-10 px-4">
-      <div className="flex px-4 py-3 gap-3 border border-border rounded-lg bg-card shadow-sm">
+      <div className="flex px-4 py-3 gap-3 border border-border rounded-lg bg-card shadow-sm items-center">
         <Search className="w-5 h-5 text-foreground/60" />
-        <input
+        <Input
           type="text"
           placeholder="Pesquise pelo serviço desejado"
-          className="outline-none flex-1 bg-transparent text-foreground placeholder:text-foreground/60"
+          className="border-none"
           onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
@@ -44,7 +36,7 @@ export default function Dashboard() {
             ))
           : // Exibe os serviços quando carregados
             (() => {
-              const filteredServices = services.filter(service =>
+              const filteredServices = services.allIds.filter(service =>
                 service.name.toLowerCase().includes(searchTerm.toLowerCase())
               );
 
@@ -54,10 +46,16 @@ export default function Dashboard() {
                     key={service.id}
                     serviceName={service.name}
                   >
-                    <ServiceCard
+                    <Modal
+                      trigger={
+                        <div className="cursor-pointer">
+                          <ServiceCard
+                            service={service}
+                            simulateError={service.id === "3"}
+                          />
+                        </div>
+                      }
                       service={service}
-                      onClick={() => handleServiceClick(service)}
-                      simulateError={service.id === "3"}
                     />
                   </ServiceCardErrorBoundary>
                 ))
@@ -70,14 +68,6 @@ export default function Dashboard() {
               );
             })()}
       </section>
-
-      {isModalOpen && selectedService && (
-        <Modal
-          isOpen={isModalOpen}
-          setIsOpen={handleCloseModal}
-          service={selectedService}
-        />
-      )}
     </div>
   );
 }
